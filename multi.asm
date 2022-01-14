@@ -336,11 +336,15 @@ start
 	ldir				; copy 64 bytes from hl to de	
 	call hprint16 		; print a 512 bit (64byte numnber as hex to screen)
 
-	ld hl, s2		; copy s2 to print buffer 
-	ld de, to_print		;
-	ld bc, 2
-	ldir				; copy 64 bytes from hl to de	
-	;call hprint16 		; print a 512 bit (64byte numnber as hex to screen)
+
+	ld hl,mainLoopCount  ; can only display 2 more 64byte numbers on screen on first output (prev hprint calls did 2 here)
+	ld a,18
+	ld (hl),a
+
+	ld hl,mainCLSCountDown_mem  ;; limit the number of screen clears and the 183 * 4 fib numbers
+	ld a,100
+	ld (hl),a
+
 	
 mainloop		
 	ld de, (s1)
@@ -354,11 +358,37 @@ mainloop
 	ldir	
 	
 	call hprint16 		; print a 512 bit 
-	
+
 	ld hl, (s1)
-	inc hl
+	inc hl			; add one, we're printing times tables here
 	ld (s1), hl
+	
+	ld hl,mainLoopCount
+	ld a,(hl)	
+	dec a
+	jp nz, skip
+	
+	ld (hl),a
+
+	ld hl,mainLoopCount
+	ld a,18
+	ld (hl),a	
+
+	ld hl,mainCLSCountDown_mem
+	ld a, (hl)
+	dec a
+	jp z, endPROG
+	ld (hl),a
+	call hprint 	; print out how many iterations (of screen clears)
+	call CLS	
+	
 	jp mainloop
+	
+skip
+	ld hl,mainLoopCount
+	ld (hl),a			; save a back to (hl) (mainLoopCount)
+	
+	jp mainloop	
 	
 endPROG
 	ret
