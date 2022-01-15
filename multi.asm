@@ -1,5 +1,3 @@
-;; zx81 -fibonacci 
-
 #include "zx81defs.asm" ;; https://www.sinclairzxworld.com/viewtopic.php?t=2186&start=40
 ;EQUs for ROM routines
 #include "zx81rom.asm"
