@@ -1,5 +1,3 @@
-;; zx81 -fibonacci 
-
 #include "zx81defs.asm" ;; https://www.sinclairzxworld.com/viewtopic.php?t=2186&start=40
 ;EQUs for ROM routines
 #include "zx81rom.asm"
@@ -28,10 +26,10 @@ mainCLSCountDown_mem
 	DEFB 0
 
 mainLoopCount .equ mainLoopCount_mem
-m1 		.equ m1_mem ;use in sum128
-m2 		.equ m2_mem ;use in sum128
-answer 	.equ answer_mem ;use in sum128
-to_print .equ to_print_mem ;use hprint128
+m1 		.equ m1_mem 
+m2 		.equ m2_mem 
+answer 	.equ answer_mem 
+to_print .equ to_print_mem 
 
 hprint16  ; print one 2byte number stored in location $to_print modified from hprint http://swensont.epizy.com/ZX81Assembly.pdf?i=1
 	;ld hl,$to_print
